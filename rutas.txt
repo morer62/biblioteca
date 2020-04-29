@@ -1,0 +1,7 @@
+libros(
+  getALL = "/api/libros"
+  getOne = "/api/libros?id={id}"
+  post   = "/api/libro?put=0"
+  put    = "/api/libro?put=1&id={id}"
+  delete = "/api/libro?id={id}"
+)
