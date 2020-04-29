@@ -33,14 +33,11 @@ class Libro{
   public function updateOne($post, $id){
     $db = new DB();
     $dbConn = $db->connection();
-    $sql = " UPDATE libro SET libro = ?, titulo = ?, fecha = ?, autor= ?, editorial = ? WHERE id = ?";
+    $sql = " UPDATE libro SET libro = ?, autor= ? WHERE id = ?";
     $statement = $dbConn->prepare($sql);
     $statement->execute( array(
       $post['libro'],
-      $post['titulo'],
-      $post['fecha'],
       $post['autor'],
-      $post['editorial'],
       $id
     ));
     $dbConn = null;
@@ -65,9 +62,9 @@ class Libro{
     $dbConn = $db->connection();
     $input = $post;
     $sql = "INSERT INTO libro
-          (libro,titulo ,fecha, autor, editorial)
+          (libro, autor)
           VALUES
-          (:libro, :titulo, :fecha, :autor, :editorial)";
+          (:libro, :autor)";
 
     $statement = $dbConn->prepare($sql);
     $db->bindAllValues($statement, $input);
@@ -79,7 +76,9 @@ class Libro{
       $input['id'] = $postId;
       return $input;
 	  }else{
-      return $data["mensaje"] = 'error';
+      return array(
+        "mensaje" => "error al guardar libro"
+      );
     }
   }
 }
