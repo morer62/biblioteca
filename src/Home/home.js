@@ -44,7 +44,14 @@ export default class Home extends Component {
   }
 
   onAdd = () => {
-    postLibro(this.state.libroA, this.state.autorA).then( x => {
+    let { libroA, autorA } = this.state;
+
+    if(libroA.trim() == "" || autorA.trim() == ""){
+      ToastAndroid.show("Todos los campos son necesarios", ToastAndroid.SHORT);
+      return;
+    }
+
+    postLibro(libroA.trim(), autorA.trim()).then( x => {
       if(!x.error){
         let libros = this.state.libros;
         libros.push(x.libro);
@@ -134,6 +141,11 @@ export default class Home extends Component {
 
   update = () => {
     let { idE, libroE, autorE } = this.state;
+
+    if(libroE.trim() == "" || autorE.trim() == ""){
+      ToastAndroid.show("Todos los campos son necesarios", ToastAndroid.SHORT);
+      return;
+    }
 
     updateLibro(idE, libroE.trim(), autorE.trim()).then(valor =>{
       if(valor){

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Table({libros = [], editar, eliminar}) {
 
+  let length = libros.length;
   return (
     <View style={styles.card}>
       <View style={styles.headers}>
@@ -14,8 +15,20 @@ export default function Table({libros = [], editar, eliminar}) {
       </View>
 
       {libros.map((libro, i) => {
+        let estilos = [];
+        if (length-1 != i){
+          estilos = [
+            styles.row, 
+            {
+              borderBottomColor: "grey",
+              borderBottomWidth: 1,
+            }
+          ]
+        }else{
+          estilos = [styles.row];
+        }
         return (
-          <View style={styles.row} key={i}>
+          <View style={estilos} key={i}>
             <Text style={styles.rowItem1}>{libro.libro}</Text>
             <Text style={styles.rowItem1}>{libro.autor}</Text>
             <TouchableOpacity onPress={()=>editar(libro)} style={styles.rowItem2}><Icon name="edit" size={20} color="#ff9800"/></TouchableOpacity>
@@ -56,8 +69,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     height: 40,
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
     paddingTop: 10,
   },
   rowItem1:{
